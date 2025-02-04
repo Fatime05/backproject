@@ -5,11 +5,12 @@ import authRoute from './routes/auth.js'
 import usersRoute from './routes/users.js'
 import hotelsRoute from './routes/hotels.js'
 import roomsRoute from './routes/rooms.js'
-
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/config.js";
 configDotenv()
 
 const app = express()
+app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors('*'))
@@ -25,7 +26,7 @@ app.use("/api/rooms",roomsRoute)
 
 app.use((err,req,res,next) => {
     const errorStatus = err.status || 500
-    const errorMessage = err.message || "Something went wrong!"
+    const errorMessage = err.message || "Something went wrong!";
     return res.status(errorStatus).json({
         success:false,
         status:errorStatus,
@@ -35,9 +36,9 @@ app.use((err,req,res,next) => {
 })
 
 
+ 
 
-
-app.listen(5086,() => {
-    console.log("backend running");
+app.listen(6066,() => {
+    console.log("backend running"); 
     
-})
+})      
