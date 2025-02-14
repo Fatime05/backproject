@@ -30,7 +30,7 @@ export const deleteHotel = async(req,res,next) => {
 }
 export const getHotel = async(req,res,next) => {
     try{
-        const hotel = await Hotel.findById(req.params.id)
+        const hotel = await Hotel.findById(req.params.id).populate("rooms");
         res.status(200).json(hotel)
     }catch(err){
         next(err)
@@ -39,7 +39,7 @@ export const getHotel = async(req,res,next) => {
 
 export const getHotels = async(req,res,next) => {
     try{
-        const hotels = await Hotel.find()
+        const hotels = await Hotel.find().populate("rooms")
         res.status(200).json(hotels)
     }catch(err){
         next(err)

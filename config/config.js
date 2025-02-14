@@ -2,15 +2,14 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
     try {
-        // MongoDB-yə qoşuluruq
+
         const connect = await mongoose.connect(process.env.MONGO_URI);
 
-        // Qoşulmanın uğurlu olduğunu bildiririk
         console.log(`MongoDB connected: ${connect.connection.host}`);
     } catch (err) {
-        // Hər hansı bir xəta baş verərsə, xəta mesajını konsolda göstəririk
+        
         console.error("MongoDB connection error:", err);
-        process.exit(1);  // Əgər əlaqə qurulmazsa, prosesi dayandırırıq
+        process.exit(1); 
     }
 };
 
