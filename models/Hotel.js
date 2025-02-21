@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
+import Room from "./Room.js";
 
 const HotelSchema = new mongoose.Schema({
     name:{
@@ -46,7 +47,7 @@ const HotelSchema = new mongoose.Schema({
     },
     featured:{
         type:Boolean,
-        default:false
+        default:true
     }
 })
 

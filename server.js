@@ -5,9 +5,9 @@ import authRoute from './routes/auth.js'
 import usersRoute from './routes/users.js'
 import hotelsRoute from './routes/hotels.js'
 import roomsRoute from './routes/rooms.js'
-import searchRoutes from './routes/search.js'
 import reservationRoutes from './routes/reservation.js'
 import authenticateUser from './routes/auth.js'
+import bookingRoutes from './routes/bookingRoutes.js'
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/config.js";
 configDotenv()
@@ -17,7 +17,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors({
-    origin: "http://localhost:3001", // React frontend URL
+    origin: "http://localhost:3000", // React frontend URL
   credentials: true, // Cookie-ləri icazə vermək üçün
 })) 
 
@@ -29,8 +29,8 @@ app.use("/api/auth",authRoute)
 app.use("/api/users",usersRoute)
 app.use("/api/hotels",hotelsRoute)
 app.use("/api/rooms",roomsRoute)
-app.use('/api/search', searchRoutes);
 app.use("/api/reservations", authenticateUser, reservationRoutes);
+app.use('/api', bookingRoutes);
 
 app.use((err,req,res,next) => {
     const errorStatus = err.status || 500
@@ -46,7 +46,7 @@ app.use((err,req,res,next) => {
 
  
 
-app.listen(6066,() => {
+app.listen(6068,() => {
     console.log("backend running"); 
     
 })      

@@ -30,7 +30,7 @@ export const login = async (req, res, next) => {
     const isPasswordCorrect = await bcrypt.compare(req.body.password, user.password);
     if (!isPasswordCorrect) return next(createError(400, "Wrong password or username!"));
 
-    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT, {
       expiresIn: '1h', // Tokenin müddəti
     });
     
@@ -52,7 +52,7 @@ export const authenticateUser = async (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT);
     req.user = await User.findById(decoded.id); // Token-dəki istifadəçi məlumatlarını tapırıq
     next();  // Middleware-də növbəti addıma keçirik
   } catch (error) {
