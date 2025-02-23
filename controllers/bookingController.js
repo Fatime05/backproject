@@ -9,7 +9,7 @@ export const bookRoom = async (req, res) => {
       return res.status(404).json({ message: 'Room not found' });
     }
 
-    // Otağın tarixlərini yoxla
+ 
     const isAvailable = room.roomNumbers.every((roomNumber) => {
       return roomNumber.unavailableDates.every((unavailableDate) => {
         return !(
@@ -43,7 +43,7 @@ export const getAvailableRooms = async (req, res) => {
   const { checkInDate, checkOutDate } = req.query;
 
   try {
-    // Bu tarixlərə uyğun boş otaqları tapırıq
+    
     const availableRooms = await Room.find({
       "roomNumbers.unavailableDates": {
         $not: {

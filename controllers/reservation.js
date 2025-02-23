@@ -1,18 +1,18 @@
-import Reservation from "../models/Reservation.js"; // ESM sintaksisi ilə import
-import { createError } from "../utils/error.js"; // createError modulunu import
+import Reservation from "../models/Reservation.js"; 
+import { createError } from "../utils/error.js"; 
 
-// Yeni rezervasiya əlavə et
+
 export const createReservation = async (req, res) => {
   try {
     const { roomType, checkIn, checkOut } = req.body;
-    const userId = req.user._id; // İstifadəçi identifikatoru (auth middleware istifadə olunur)
+    const userId = req.user._id; 
 
     const newReservation = new Reservation({
       userId,
       roomType,
       checkIn,
       checkOut,
-      status: 'Pending', // Başlangıçta "Pending" olaraq qeyd olunur
+      status: 'Pending', 
     });
 
     const savedReservation = await newReservation.save();
@@ -22,10 +22,10 @@ export const createReservation = async (req, res) => {
   }
 };
 
-// Rezervasiyalarını əldə et
+
 export const getUserReservations = async (req, res) => {
   try {
-    const userId = req.user._id; // İstifadəçi identifikatoru (auth middleware istifadə olunur)
+    const userId = req.user._id; 
     
     const reservations = await Reservation.find({ userId });
     res.status(200).json(reservations);

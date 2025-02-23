@@ -6,18 +6,20 @@ export const searchRooms = async (req, res) => {
 
   try {
     const hotel = await Hotel.findOne();
+    console.log("Hotel Found:", hotel);
+console.log("Hotel Rooms:", hotel.rooms);
     if (!hotel) {
       return res.status(404).json({ message: 'Hotel not found' });
     }
 
     const availableRooms = await Promise.all(hotel.rooms.map(async (roomId) => {
       const room = await Room.findById(roomId);
+      if (!room) return null; 
 
-      // Otağın doluluq tarixlərini yoxlamaq üçün filter
       const isAvailable = room.roomNumbers.some((roomNumber) => {
         return !roomNumber.unavailableDates.some((unavailableDate) => {
           return (
-            (new Date(unavailableDate) >= new Date(checkInDate) && new Date(unavailableDate) < new Date(checkOutDate)) || 
+            (new Date(unavailableDate) >= new Date(checkInDate) && new Date(unavailableDate) < new Date(checkOutDate)) ||
             (new Date(unavailableDate) > new Date(checkInDate) && new Date(unavailableDate) <= new Date(checkOutDate))
           );
         });

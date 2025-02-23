@@ -23,7 +23,7 @@ const RoomSchema = new mongoose.Schema(
     hotelId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Hotel",
-      required: true, // **Otel ID vacib olmalıdır**
+      required: true, 
     },
   },
   { timestamps: true }

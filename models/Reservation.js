@@ -3,7 +3,7 @@ import mongoose from "mongoose"; // ESM sintaksisi ilə import
 const reservationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",  // İstifadəçinin məlumatlarını əlaqələndirmək üçün
+    ref: "User",  
     required: true,
   },
   roomType: {
@@ -33,6 +33,6 @@ const reservationSchema = new mongoose.Schema({
   },
 });
 
-const Reservation = mongoose.model("Reservation", reservationSchema); // Model yaratmaq
+const Reservation = mongoose.model("Reservation", reservationSchema); 
 
-export default Reservation; // ESM ilə export
+export default Reservation; 

@@ -1,41 +1,36 @@
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
 
-// 📌 Otaq yaratmaq
 export const createRoom = async (req, res, next) => {
-    const hotelId = req.params.hotelId;  // URL-dən `hotelId` alırıq
-    console.log("Gələn hotelId:", hotelId);  // Debug üçün
+    const hotelId = req.params.hotelId; 
+    console.log("Gələn hotelId:", hotelId);  
 
     if (!hotelId) {
         return res.status(400).json({ message: "Otel ID tələb olunur." });
     }
 
-    // Yeni otağı yaratmaq
     const newRoom = new Room({
-        ...req.body,  // Məlumatları daxil edirik
-        hotelId: hotelId,  // ✅ hotelId sahəsini modelə əlavə edirik
+        ...req.body, 
+        hotelId: hotelId,  
     });
 
     try {
-        // Yeni otağı bazada saxlayırıq
         const savedRoom = await newRoom.save();
 
-        // Otaq yaradıldıqdan sonra, bu otağı otelin `rooms` sahəsinə əlavə edirik
         try {
             await Hotel.findByIdAndUpdate(hotelId, {
-                $push: { rooms: savedRoom._id },  // Oteldəki otaqlar siyahısına əlavə edirik
+                $push: { rooms: savedRoom._id },  
             });
         } catch (err) {
             next(err);
         }
 
-        res.status(200).json(savedRoom);  // Yeni yaradılan otağı geri qaytarırıq
+        res.status(200).json(savedRoom);  
     } catch (err) {
         next(err);
     }
 };
 
-// 📌 Otaq yeniləmək
 export const updateRoom = async (req, res, next) => {
     try {
         const updatedRoom = await Room.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
@@ -45,7 +40,6 @@ export const updateRoom = async (req, res, next) => {
     }
 };
 
-// 📌 Otaq silmək
 export const deleteRoom = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -59,7 +53,7 @@ export const deleteRoom = async (req, res, next) => {
             return res.status(404).json({ message: "Otaq tapılmadı!" });
         }
 
-        // **Otağın aid olduğu oteli tapıb, həmin otelin rooms array-dan silirik**
+       
         await Hotel.updateMany(
             { rooms: id },
             { $pull: { rooms: id } }
@@ -73,7 +67,7 @@ export const deleteRoom = async (req, res, next) => {
 
 
 
-// 📌 Tək otağı əldə etmək
+
 export const getRoom = async (req, res, next) => {
     try {
         const room = await Room.findById(req.params.id);
@@ -83,7 +77,7 @@ export const getRoom = async (req, res, next) => {
     }
 };
 
-// 📌 Bütün otaqları əldə etmək
+
 export const getRooms = async (req, res, next) => {
     try {
         const rooms = await Room.find();
